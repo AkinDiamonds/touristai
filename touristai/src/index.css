@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply relative min-h-screen w-full;
+  }
+
+  body::after {
+    content: "";
+    @apply absolute inset-0 opacity-10 pointer-events-none z-0;
+    background-image: url('./assets/africa.png');
+    background-repeat: repeat;
+    background-size: 300px;
+  }
+}
