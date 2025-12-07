@@ -36,7 +36,7 @@ function Sidebar() {
   return (
     <div
       className={`${isCollapsed ? "w-24 px-4" : "w-[350px] p-8"
-        } h-full bg-[#3e2723] rounded-2xl text-white flex flex-col justify-between z-10 transition-all duration-300 ease-in-out relative`}
+        } h-full bg-[#3e2723] rounded-r-2xl text-white flex flex-col justify-between z-10 transition-all duration-300 ease-in-out relative`}
     >
       {/* Toggle Button */}
       <button
