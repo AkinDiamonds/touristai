@@ -129,11 +129,10 @@ vectorstore = Chroma.from_documents(
 retriever = vectorstore.as_retriever(
     search_kwargs={
         "k": 5,
-        "filter": {"category": "beach"}
     }
 )
 
-docs = retriever.invoke("fun places with water")
+docs = retriever.invoke({input})
 
 # for d in docs:
 #     print(d.metadata)
