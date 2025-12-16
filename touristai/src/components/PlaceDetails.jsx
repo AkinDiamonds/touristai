@@ -1,31 +1,32 @@
 import { useParams, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { ArrowLeft, MessageSquare, ArrowRight, Star, Clock, MapPin, DollarSign } from "lucide-react";
-import bgImage from "../assets/africa.png";
+import { fetchPlaceById } from "../services/placesService";
 
 function PlaceDetails() {
     const { id } = useParams();
     const navigate = useNavigate();
+    const [placeData, setPlaceData] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
 
-    // In a real app, you'd fetch data based on ID. 
-    // For now, we simulate data.
-    const placeData = {
-        title: id.replace(/-/g, " "),
-        type: "Museum",
-        rating: 4.8,
-        reviews: 1240,
-        description: `Explore the vibrant culture and history of Lagos at ${id.replace(/-/g, " ")}. This destination offers a unique blend of traditional heritage and modern experiences. Visitors can enjoy guided tours, interactive exhibits, and a deep dive into the local stories that shape this magnificent city. Whether you're a history buff or just looking for a beautiful spot to relax, this place has something for everyone.`,
-        location: "Lekki Phase 1, Lagos",
-        hours: "9:00 AM - 6:00 PM",
-        price: "₦5,000 / person",
-        tips: [
-            "Best visited in the morning to avoid crowds.",
-            "Don't miss the rooftop view.",
-            "Carry cash for local vendors nearby."
-        ]
-    };
+    useEffect(() => {
+        const loadPlace = async () => {
+            setIsLoading(true);
+            try {
+                const data = await fetchPlaceById(id);
+                setPlaceData(data);
+            } catch (error) {
+                console.error("Error loading place:", error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        loadPlace();
+    }, [id]);
 
     const handleChat = () => {
-        // Navigate home and pass state to focus input
+        if (!placeData) return;
         navigate("/", { state: { focusInput: true, query: `Tell me more about ${placeData.title}` } });
     };
 
@@ -33,6 +34,36 @@ function PlaceDetails() {
         // Cycle to a dummy next place
         navigate("/place/Elegushi-Beach");
     };
+
+    if (isLoading) {
+        return (
+            <div className="flex-1 h-full flex items-center justify-center">
+                <div className="text-center">
+                    <div className="relative w-16 h-16 mx-auto mb-4">
+                        <div className="absolute top-0 left-0 w-full h-full border-4 border-[#BF360C]/20 rounded-full"></div>
+                        <div className="absolute top-0 left-0 w-full h-full border-4 border-transparent border-t-[#BF360C] rounded-full animate-spin"></div>
+                    </div>
+                    <p className="text-[#5D4037] font-medium">Loading place details...</p>
+                </div>
+            </div>
+        );
+    }
+
+    if (!placeData) {
+        return (
+            <div className="flex-1 h-full flex items-center justify-center">
+                <div className="text-center">
+                    <h2 className="text-2xl font-bold text-[#3E2723] mb-4">Place Not Found</h2>
+                    <button
+                        onClick={() => navigate("/")}
+                        className="bg-[#3E2723] text-white px-6 py-3 rounded-xl hover:bg-[#5D4037] transition-all"
+                    >
+                        Go Back Home
+                    </button>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="flex-1 h-full overflow-y-auto relative z-0">

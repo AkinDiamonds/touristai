@@ -1,2 +1,5 @@
 venv
 .env
+/faiss_index
+/__pycache__
+Cleaned_Tourist.txt

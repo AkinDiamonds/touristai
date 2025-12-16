@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+venv/
+__pycache__/
+
+# Environments
+.env
+
+# Build outputs
+dist/
+build/
+
+# IDEs
+.vscode/
+.idea/
+
+# Backend specific
+rag/faiss_index/
+rag/Cleaned_Tourist.txt
+*.pyc
+
+# OS
+.DS_Store
+Thumbs.db
