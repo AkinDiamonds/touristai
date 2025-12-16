@@ -7,7 +7,7 @@ TouristAI is a comprehensive travel assistant for Lagos, Nigeria, combining a cu
 - **Backend**: FastAPI + LangChain + OpenAI
 - **Database**: Supabase (PostgreSQL)
 - **Vector Store**: FAISS
-- **LLM**: Natlas (hosted on Kaggle via Ngrok) / OpenAI GPT-3.5-turbo
+- **LLM**: Natlas (hosted on Kaggle via Ngrok) 
 
 ## Project Structure
 
